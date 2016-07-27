@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">TheMovieApp</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="pref_sortby_key" translatable="false">sortby</string>
+    <string name="pref_sortby_default" translatable="false">popular</string>
+    <string-array name="pref_sort_list_titles">
+        <item>Most Popular</item>
+        <item>Top Rated</item>
+    </string-array>
+
+    <string-array name="pref_sort_list_values">
+        <item>popular</item>
+        <item>top_rated</item>
+    </string-array>
+    <string name="title_activity_details">DetailsActivity</string>
+</resources>

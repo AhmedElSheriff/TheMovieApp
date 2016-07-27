@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.themovieapp.DetailsActivityFragment"
+   >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#42BDAB"
+        android:layout_weight="3"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Dawn Of Justice"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_margin="40dp"
+            android:id="@+id/movieTitle"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2ECCFA"
+        android:layout_weight="1"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:id="@+id/detailsMoviePoster"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/releaseyear"
+                android:layout_toRightOf="@+id/detailsMoviePoster"
+                android:text="2015"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/moviePeriod"
+                android:layout_toRightOf="@+id/detailsMoviePoster"
+                android:layout_below="@+id/releaseyear"
+                android:textSize="20sp"
+                android:text="120min"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="5dp"
+
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/movieRate"
+                android:layout_toRightOf="@+id/detailsMoviePoster"
+                android:layout_below="@id/moviePeriod"
+                android:textSize="17sp"
+                android:text="8.1/10"
+                android:layout_marginLeft="20dp"
+
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/movieDescription"
+                android:text="adsldmsaldmasldsalmdasmdsamldasmldmasldmasldmasldlasmdsamdlasmdsaldmasldmsaldmalsdmaslmdlasmdmasldmasldmsaldas"
+                android:layout_below="@+id/movieRate"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trailers:"
+                android:id="@+id/movieTrailers"
+                android:layout_below="@+id/movieDescription"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
