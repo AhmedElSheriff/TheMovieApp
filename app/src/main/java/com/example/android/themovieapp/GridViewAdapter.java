@@ -19,6 +19,7 @@ public class GridViewAdapter extends BaseAdapter {
     Context context;
     ArrayList<MoviesData> array;
     LayoutInflater inflater;
+    ImageView image;
 
 
 
@@ -50,22 +51,35 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View row = convertView;
-        ImageView image;
-        if(row == null)
+        //ImageView image;
+
+        if(convertView == null)
         {
-            image = new ImageView(context);
+//            image = (ImageView)row.findViewById(R.id.oneMovieBlockImageView);
+            //image = new ImageView(context);
+////            //image.setLayoutParams(new GridView.LayoutParams(185, 370));
+////            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+////
+////            image.setPadding(8, 8, 8, 8);
+
+             row = inflater.inflate(R.layout.movie_block,null);
+
 
         }
-        else
-        {
-            image = (ImageView) row;
-        }
+
+
+            image = (ImageView)row.findViewById(R.id.oneMovieBlockImageView);
+////            //image.setLayoutParams(new GridView.LayoutParams(185, 370));
+////            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+////            image.setPadding(8, 8, 8, 8);
+//            image = (ImageView)row.findViewById(R.id.oneMovieBlockImageView);
+
 
         //image = (ImageView)row.findViewById(R.id.oneMovieBlockImageView);
 
         Picasso.with(context).load(array.get(position).getPoster_path()).into(image);
 
-        return image;
+        return row;
     }
 
 }

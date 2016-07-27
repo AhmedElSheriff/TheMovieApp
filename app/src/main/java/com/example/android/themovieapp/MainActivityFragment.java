@@ -15,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,10 +37,18 @@ public class MainActivityFragment extends Fragment {
 
     GridView gridView;
     String sortByStr;
+    ImageView imageView;
+
 
 
     ArrayList<MoviesData> moviesDatas;
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     public MainActivityFragment() {
     }
@@ -46,14 +57,26 @@ public class MainActivityFragment extends Fragment {
     public void onStart() {
         super.onStart();
         updateMovies();
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-       //updateMovies();
 
     }
 
@@ -87,6 +110,8 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        updateMovies();
+
 
         View rootView = inflater.inflate(R.layout.fragment_main,container,false);
 
@@ -239,6 +264,7 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(ArrayList<MoviesData> result) {
             if (result != null) {
 
+                imageView = (ImageView) getActivity().findViewById(R.id.oneMovieBlockImageView);
                 GridViewAdapter adapter = new GridViewAdapter(getActivity(),moviesDatas);
                 gridView.setAdapter(adapter);
 
