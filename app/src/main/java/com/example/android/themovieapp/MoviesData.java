@@ -53,7 +53,7 @@ public class MoviesData implements Parcelable{
     }
 
     public void setPoster_path(String poster_path) {
-        this.poster_path = "http://image.tmdb.org/t/p/w185" + poster_path;
+        this.poster_path =  "http://image.tmdb.org/t/p/w185" + poster_path;
     }
 
     ////////////////////////////////////////////////////

@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -33,21 +34,22 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements RecyclerViewAdapter.Clicklistener {
 
     GridView gridView;
     String sortByStr;
     ImageView imageView;
+    RecyclerViewAdapter adapter;
+    RecyclerView recyclerView;
 
 
 
-    ArrayList<MoviesData> moviesDatas;
+    ArrayList<MoviesData> moviesDatas; ;
 
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     public MainActivityFragment() {
@@ -57,14 +59,11 @@ public class MainActivityFragment extends Fragment {
     public void onStart() {
         super.onStart();
         updateMovies();
-
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override
@@ -77,7 +76,6 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     public void updateMovies()
@@ -85,13 +83,15 @@ public class MainActivityFragment extends Fragment {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sortByStr = prefs.getString(getString(R.string.pref_sortby_key),getString(R.string.pref_sortby_default));
+
         FetchMovies movies = new FetchMovies();
         movies.execute();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.refreshmovies,menu);
+        inflater.inflate(R.menu.refreshmovies, menu);
+
     }
 
     @Override
@@ -108,34 +108,26 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        updateMovies();
+
 
 
         View rootView = inflater.inflate(R.layout.fragment_main,container,false);
 
 
-
-        gridView = (GridView) rootView.findViewById(R.id.moviesListGridView);
-
-
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                MoviesData movie = moviesDatas.get(position);
-
-                Intent i = new Intent(getActivity(),DetailsActivity.class);
-                i.putExtra("parcelable_object",movie);
-                startActivity(i);
-            }
-        });
-
-
-
         return rootView;
+
+    }
+
+    @Override
+    public void itemClicked(View view, int position) {
+
 
     }
 
@@ -174,7 +166,6 @@ public class MainActivityFragment extends Fragment {
             }
 
 
-
             return moviesDatas;
 
 
@@ -192,12 +183,17 @@ public class MainActivityFragment extends Fragment {
                 if(sortByStr.equals("popular"))
                 {
                     url = new URL("http://api.themoviedb.org/3/movie/popular?api_key=9a005dd380ec772cf6045b8c370f8ef7");
+
                 }
 
                 else if(sortByStr.equals("top_rated"))
                 {
                     url = new URL("http://api.themoviedb.org/3/movie/top_rated?api_key=9a005dd380ec772cf6045b8c370f8ef7");
+
                 }
+
+
+
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -232,7 +228,7 @@ public class MainActivityFragment extends Fragment {
                 return null;
             } finally {
 
-                Log.e("TMDB AP Throws: ", moviesJsonStr);
+               // Log.e("TMDB AP Throws: ", moviesJsonStr);
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
@@ -252,11 +248,6 @@ public class MainActivityFragment extends Fragment {
 
             }
 
-
-
-
-
-
             return null;
         }
 
@@ -264,10 +255,21 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(ArrayList<MoviesData> result) {
             if (result != null) {
 
-                imageView = (ImageView) getActivity().findViewById(R.id.oneMovieBlockImageView);
-                GridViewAdapter adapter = new GridViewAdapter(getActivity(),moviesDatas);
-                gridView.setAdapter(adapter);
+                recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerview);
 
+                adapter = new RecyclerViewAdapter(getActivity(),moviesDatas);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                adapter.setClickListener(new RecyclerViewAdapter.Clicklistener() {
+                    @Override
+                    public void itemClicked(View view, int position) {
+                        MoviesData movie = moviesDatas.get(position);
+
+                Intent i = new Intent(getActivity(),DetailsActivity.class);
+                i.putExtra("parcelable_object",movie);
+                startActivity(i);
+                    }
+                });
 
 
             }
