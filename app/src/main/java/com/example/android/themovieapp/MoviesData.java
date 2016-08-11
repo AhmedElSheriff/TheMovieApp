@@ -14,7 +14,8 @@ public class MoviesData implements Parcelable{
 
     }
 
-    private String title,rate,release,overview,poster_path;
+    private String title,rate,release,overview,poster_path,id;
+
 
     protected MoviesData(Parcel in) {
         title = in.readString();
@@ -22,6 +23,7 @@ public class MoviesData implements Parcelable{
         release = in.readString();
         overview = in.readString();
         poster_path = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<MoviesData> CREATOR = new Creator<MoviesData>() {
@@ -56,6 +58,12 @@ public class MoviesData implements Parcelable{
         this.poster_path =  "http://image.tmdb.org/t/p/w185" + poster_path;
     }
 
+
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     ////////////////////////////////////////////////////
 
     public String getTitle() {
@@ -78,6 +86,11 @@ public class MoviesData implements Parcelable{
         return poster_path;
     }
 
+    public String getId() {
+        return id;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -90,5 +103,6 @@ public class MoviesData implements Parcelable{
         dest.writeString(release);
         dest.writeString(overview);
         dest.writeString(poster_path);
+        dest.writeString(id);
     }
 }

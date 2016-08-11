@@ -15,8 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.ImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,15 +34,13 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment implements RecyclerViewAdapter.Clicklistener {
 
-    GridView gridView;
     String sortByStr;
-    ImageView imageView;
     RecyclerViewAdapter adapter;
     RecyclerView recyclerView;
 
 
 
-    ArrayList<MoviesData> moviesDatas; ;
+    ArrayList<MoviesData> moviesDatas;
 
 
     @Override
@@ -117,11 +113,7 @@ public class MainActivityFragment extends Fragment implements RecyclerViewAdapte
                              Bundle savedInstanceState) {
 
 
-
-        View rootView = inflater.inflate(R.layout.fragment_main,container,false);
-
-
-        return rootView;
+        return inflater.inflate(R.layout.fragment_main,container,false);
 
     }
 
@@ -161,6 +153,7 @@ public class MainActivityFragment extends Fragment implements RecyclerViewAdapte
                 movie.setOverview(movieObject.getString("overview"));
                 movie.setRate(movieObject.getString("vote_average"));
                 movie.setRelease(movieObject.getString("release_date"));
+                movie.setId(movieObject.getString("id"));
                 moviesDatas.add(movie);
 
             }
@@ -228,7 +221,7 @@ public class MainActivityFragment extends Fragment implements RecyclerViewAdapte
                 return null;
             } finally {
 
-               // Log.e("TMDB AP Throws: ", moviesJsonStr);
+               // Log.e("TMDB AP Throws: ", trailerJsonStr);
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
@@ -264,6 +257,7 @@ public class MainActivityFragment extends Fragment implements RecyclerViewAdapte
                     @Override
                     public void itemClicked(View view, int position) {
                         MoviesData movie = moviesDatas.get(position);
+
 
                 Intent i = new Intent(getActivity(),DetailsActivity.class);
                 i.putExtra("parcelable_object",movie);
